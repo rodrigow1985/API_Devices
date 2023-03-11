@@ -1,0 +1,50 @@
+version: "3"
+services:
+  web:
+    build: .
+    container_name: api_$PROJECT_NAME
+    restart: always
+    ports:
+      - "3003:3003"
+    volumes:
+      - $PATH_CODE:/usr/src/app
+    depends_on:
+      - db
+    links:
+      - db:db
+    networks:
+      - home-server-mysql-phpmyadmin-network
+  db:
+    image: mysql:8
+    container_name: mysql_$PROJECT_NAME
+    volumes:
+#      - db_data:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
+    restart: always
+    env_file: .env
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=db_$PROJECT_NAME
+#    command: --default-authentication-plugin=mysql_native_passwords
+    networks:
+      - home-server-mysql-phpmyadmin-network
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_$PROJECT_NAME
+    restart: always
+    depends_on:
+      - db
+    env_file: .env
+    ports:
+      - "8085:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=$MYSQL_USER
+      - PMA_PASSWORD=$MYSQL_PASSWORD
+    networks:
+      - home-server-mysql-phpmyadmin-network
+networks:
+  home-server-mysql-phpmyadmin-network:
+    driver: bridge
+
