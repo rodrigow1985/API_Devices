@@ -8,8 +8,6 @@ devices = DeviceController()
 # Every devices
 @app.route('/devices', methods=['GET'])
 def getDevices():
-    #devices = DeviceController.getDevices()
-    #return jsonify({"Devices":devices})
     return DeviceController.getDevices()
 
 # Single Device
@@ -17,16 +15,16 @@ def getDevices():
 def getDevice(device_id):
     deviceFound = devices.getDevice(device_id)
     if (deviceFound != False):
-        return jsonify({'device': deviceFound})
+        return deviceFound
     return jsonify({'message': 'Device Not found'}), 400
 
 # Create device
 @app.route('/devices', methods=['POST'])
 def addDevice():
-    new_device = Device(request.json['id'], request.json['name'], request.json['code'], 
+    id = devices.addDevice(request.json['name'], request.json['code'], 
                         request.json['description'], request.json['image'], '', '')
-    if (devices.addDevice(new_device)):
-        return devices.getDevice()
+    if (id > 0):
+        return jsonify({'new_id': id})
     return jsonify({'message': 'Device can not be added'})
     
 #Update device

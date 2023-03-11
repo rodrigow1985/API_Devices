@@ -18,7 +18,7 @@ VALUES (NULL, 'device1', 'device1 description', '0001', 'http://url_image1',
 
 /* Stored Procedures */
 
-CREATE PROCEDURE `add_device`(IN `name` VARCHAR(200), IN `description` TEXT, IN `code` VARCHAR(20), IN `image` VARCHAR(200), IN `created_at` DATETIME, IN `updated_at` DATETIME) COMMENT 'Add a new device' NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER INSERT INTO `devices` (`id`, `name`, `description`, `code`, `image`, `created_at`, `updated_at`) VALUES (`id`, `name`, `description`, `code`, `image`, `created_at`, `updated_at`);
-
-
+CREATE DEFINER=`rodrigo`@`%` PROCEDURE `add_device`(IN `name` VARCHAR(200), IN `description` TEXT, IN `code` VARCHAR(20), IN `image` VARCHAR(200), IN `created_at` DATETIME, IN `updated_at` DATETIME, OUT `id` INT) COMMENT 'Add a new device' NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO `devices` (`id`, `name`, `description`, `code`, `image`, `created_at`, `updated_at`) VALUES (`id`, `name`, `description`, `code`, `image`, `created_at`, `updated_at`); SET `id` = LAST_INSERT_ID(); END
+CREATE PROCEDURE `select_devices`() COMMENT 'Select all from devices' NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER SELECT * FROM `devices` 
+CREATE PROCEDURE `select_divice_by_id` (IN `id` INT) COMMENT 'Select a device by id' NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER SELECT * FROM `devices` WHERE `devices`.`id` = `id` 
 

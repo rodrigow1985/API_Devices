@@ -41,6 +41,9 @@ class Database:
     def execute(self, sql, params=None):
         self.cursor.execute(sql, params or ())
 
+    def callproc(self, name_stored_procedure, params=None):
+        return self.cursor.callproc(name_stored_procedure, params or ())
+
     def fetchall(self):
         return self.cursor.fetchall()
 
@@ -50,3 +53,19 @@ class Database:
     def query(self, sql, params=None):
         self.cursor.execute(sql, params or ())
         return self.fetchall()
+    
+    def stored_procedure(self, name_stored_procedure, params=None):
+        try:
+            print(params)
+            self.cursor.callproc(name_stored_procedure, params or ())
+            for result in self.cursor.stored_results():
+                print('result antes del fetch')
+                print(result)
+                return result.fetchall()
+        except mysql.connector.Error as error:
+            print("Failed to execute stored procedure: {}".format(error))
+        finally:
+            if (self._conn.is_connected()):
+                self.cursor.close()
+                self.close()
+                print("MySQL connection is closed")
