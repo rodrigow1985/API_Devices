@@ -30,3 +30,18 @@ if __name__ == "__main__":
 
 4.2 Ejecutar nuestro servidor
 ```python3 app.py```
+5. Configurar la aplicación mediante el archivo .env
+6. Empezar los servicios que se utilizan en el proyecto
+```
+sudo docker-compose up -d
+```
+Los servicios son los siguientes:
+- Base de Datos MySql
+- PhpMyAdmin
+- API
+6. Generar la base de datos mediante ejecutando todas las sentencias establecidas en el archivo "database/schema.sql"
+7. Para realizar las pruebas pre configuradas en el desarrollo, revisar el archivo README.md del directorio "test"
+8. Para probar la consulta de una entidad:
+```
+http://host:port/devices
+```
