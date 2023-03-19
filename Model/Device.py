@@ -1,3 +1,5 @@
+import json
+
 class Device():
     def __init__(self, id, name, description, code, image, created_at, updated_at):
         self.id = id
@@ -7,5 +9,4 @@ class Device():
         self.image = image
         self.created_at = created_at
         self.updated_at = updated_at
-
-    # def getDevice(id):
+    

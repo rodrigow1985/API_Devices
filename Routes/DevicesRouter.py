@@ -21,8 +21,7 @@ def getDevice(device_id):
 # Create device
 @app.route('/devices', methods=['POST'])
 def addDevice():
-    id = devices.addDevice(request.json['name'], request.json['code'], 
-                        request.json['description'], request.json['image'], '', '')
+    id = devices.addDevice(request.json)
     if (id > 0):
         return jsonify({'new_id': id})
     return jsonify({'message': 'Device can not be added'})
@@ -30,23 +29,15 @@ def addDevice():
 #Update device
 @app.route('/devices/<string:device_id>', methods=['PUT'])
 def editDevice(device_id):
-    deviceFound = devices.getDevice(device_id)
-    device_editted = Device(request.json['id'], request.json['name'], request.json['code'], 
-                        request.json['description'], request.json['image'], '', '')
-    if(devices.updatedDevice(deviceFound, device_editted)):
-        return jsonify({
-            'message': 'Device Updated',
-            'device': devices.getDevice(device_id)
-        })
-    return jsonify({'message': 'Device Not found'})
+    new_updated_at = devices.updateDevice(device_id, request.json)
+    if (new_updated_at != False):
+        return jsonify({'new_updated_at': new_updated_at})
+    return jsonify({'message': 'Device can not be updated'})
 
 #Delete device
 @app.route('/devices/<string:device_id>', methods=['DELETE'])
 def deleteDevice(device_id):
-    deviceFound = devices.getDevice(device_id)
-    if(devices.deleteDevice(deviceFound)):
-        return jsonify({
-            'message': 'Device Deleted',
-            'device': devices.getDevices()
-        })
-    return jsonify({'message': 'Device Not found'})
+    new_deleted_at = devices.deleteDevice(device_id)
+    if (new_deleted_at != False):
+        return jsonify({'device_deleted_at': new_deleted_at})
+    return jsonify({'message': 'Device can not be deleted'})

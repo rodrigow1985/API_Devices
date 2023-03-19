@@ -2,7 +2,8 @@ from flask import current_app, jsonify
 from Model.Device import Device
 from data.Devices import devices
 from config.db.Database import Database
-from datetime import datetime
+from utils.Dict import CreateDict
+from utils.Date import Date
 import json
 
 class DeviceController:
@@ -10,58 +11,56 @@ class DeviceController:
         pass
 
     def getDevices():
-        devices_result = []
         db = Database()
         devices = db.stored_procedure('select_devices')
-        for device in devices:
-            current_device = Device(device[0], device[1], device[2], device[3], device[4], device[5], device[6])
-            devices_result.append(json.dumps(current_device.__dict__, default=str))
+        mydict = CreateDict()
+        for index, device in enumerate(devices):
+            mydict.add(index,({
+                "id": device[0],
+                "name": device[1],
+                "description": device[2],
+                "code": device[3],
+                "image": device[4],
+                "created_at": device[5],
+                "updated_at": device[6]
+                }))
         response = current_app.response_class(
-            response=devices_result,
+            response=json.dumps(mydict, indent=2, sort_keys=True, default=str),
             status=200,
             mimetype='application/json'
         )
         return response
 
     def getDevice(self, id):
-        devices_result = []
         db = Database()
-        devices = db.stored_procedure('select_divice_by_id', [id, ])
-        for device in devices:
-            current_device = Device(device[0], device[1], device[2], device[3], device[4], device[5], device[6])
-            devices_result.append(json.dumps(current_device.__dict__, default=str))
+        db_result = db.stored_procedure('select_divice_by_id', [id, ])
+        device = Device(db_result[0][0], db_result[0][1], db_result[0][2], db_result[0][3], db_result[0][4], db_result[0][5], db_result[0][6])
         response = current_app.response_class(
-            response=devices_result,
+            response=json.dumps(device.__dict__, default=str),
             status=200,
             mimetype='application/json'
         )
         return response
 
-    def addDevice(self, name, description, code, image, created_at, updated_at):
-        now = datetime.now()
-        created_at = now.strftime('%Y-%m-%d %H:%M:%S')
-        updated_at = now.strftime('%Y-%m-%d %H:%M:%S')
-        new_device = Device(id, name, description, code, image, created_at, updated_at)
+    def addDevice(self, request_json):
+        new_device = Device("", request_json['name'], request_json['description'], request_json['code'], request_json['image'], "", "")
         new_id = 0
         db = Database()
-        args = (new_device.name, new_device.description, new_device.code, new_device.image, new_device.created_at, 
-                new_device.updated_at, new_id)
+        args = (new_device.name, new_device.description, new_device.code, new_device.image, new_id)
         result_args = db.callproc('add_device', args)
-        return result_args[6]
+        return result_args[4]
 
-    def updateDevice(self, device, device_editted):
-        response = False
-        device['id'] = device_editted.id
-        device['name'] = device_editted.name
-        device['description'] = device_editted.description
-        device['image'] = device_editted.image
-        device['code'] = device_editted.code
-        device['updated_at'] = datetime.datetime.now()
-        response = True
-        return response
+    def updateDevice(self, id, request_json):
+        new_updated_at = ""
+        device_updated = Device(id, request_json['name'], request_json['description'], request_json['code'], request_json['image'], "", "")
+        args = (device_updated.id, device_updated.name, device_updated.description, device_updated.code, device_updated.image, new_updated_at)
+        db = Database()
+        result_args = db.callproc('update_device', args)
+        return result_args[5]
     
-    def deleteDevice(self, device):
-        response = False
-        devices.remove(device)
-        response = True
-        return response
+    def deleteDevice(self, id):
+        new_deleted_at = ""
+        args = (id, new_deleted_at)
+        db = Database()
+        result_args = db.callproc('delete_device', args)
+        return result_args[1]
