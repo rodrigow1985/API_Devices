@@ -29,7 +29,9 @@ if __name__ == "__main__":
 ```
 
     2. Ejecutar nuestro servidor
-```python3 app.py```
+```
+python3 app.py
+```
 5. Configurar la aplicación mediante el archivo .env
 6. Empezar los servicios que se utilizan en el proyecto
 ```
