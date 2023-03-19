@@ -15,7 +15,7 @@ Con esto se instalará una copia local de Python y pip en un directorio llamado 
 ```source ToDo_env/bin/activate```
 4. Instalar flask
 ```pip install flask```
-4.1 Ejemplo sencillo de flask
+    1. Ejemplo sencillo de flask
 ```
 from flask import Flask
 app = Flask(__name__)
@@ -27,8 +27,7 @@ def hello():
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port:4000)
 ```
-
-4.2 Ejecutar nuestro servidor
+    2. Ejecutar nuestro servidor
 ```python3 app.py```
 5. Configurar la aplicación mediante el archivo .env
 6. Empezar los servicios que se utilizan en el proyecto
