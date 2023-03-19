@@ -14,8 +14,7 @@ Con esto se instalará una copia local de Python y pip en un directorio llamado 
 3.3 Activar entorno virtual
 ```source ToDo_env/bin/activate```
 4. Instalar flask
-```
-pip install flask```
+```pip install flask```
     1. Ejemplo sencillo de flask
 ```
 from flask import Flask
@@ -26,11 +25,13 @@ def hello():
     return "<h1 style='color:blue'>Hello There!</h1>"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port:4000)```
+    app.run(host='0.0.0.0', port:4000)
+```
 
     2. Ejecutar nuestro servidor
 ```
-python3 app.py```
+python3 app.py
+```
 5. Configurar la aplicación mediante el archivo .env
 6. Empezar los servicios que se utilizan en el proyecto
 ```
