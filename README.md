@@ -9,10 +9,10 @@
 3. Crear un entorno virtual de Python
 3.1 ```sudo apt install python3-venv```
 3.2 Crear entorno virtual para este proyecto
-```python3 -m venv ToDo_env```
+```python3 -m venv HomeServer_env```
 Con esto se instalará una copia local de Python y pip en un directorio llamado ToDo_env dentro del directorio de su proyecto.
 3.3 Activar entorno virtual
-```source ToDo_env/bin/activate```
+```source HomeServer_env/bin/activate```
 4. Instalar flask
 ```pip install flask```
     1. Ejemplo sencillo de flask
@@ -29,9 +29,7 @@ if __name__ == "__main__":
 ```
 
     2. Ejecutar nuestro servidor
-```
-python3 app.py
-```
+```python3 app.py```
 5. Configurar la aplicación mediante el archivo .env
 6. Empezar los servicios que se utilizan en el proyecto
 ```
