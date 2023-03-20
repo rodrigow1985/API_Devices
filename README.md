@@ -1,7 +1,12 @@
 #Bibliografía
 1. ```https://www.digitalocean.com/community/tutorials/como-preparar-aplicaciones-de-flask-con-gunicorn-y-nginx-en-ubuntu-18-04-es```
 2. ```https://www.youtube.com/watch?v=Esdj9wlBOaI&t=157s```
-
+# Componentes del proyecto
+1. Base de Datos MySql
+2. PhpMyAdmin
+3. Docker - docker-compose
+4. Python
+    1. Flask
 
 #Tutorial
 1. Instalar python
