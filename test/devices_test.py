@@ -16,7 +16,8 @@ def time_measurement(funcion):
 class TestDeviceAPI(unittest.TestCase):
     host = os.getenv('API_HOST') or 'localhost'
     port = os.getenv('API_PORT') or '3003'
-    URL = "http://" + host + ":" + port + "/devices"
+    api_version = os.getenv('API_VERSION') or 'v1'
+    URL = "http://" + host + ":" + port + "/" + api_version + "/devices"
     example_device = {
         "name": "device_emample_name",
         "description": "device example description",

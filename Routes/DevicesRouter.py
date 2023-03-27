@@ -1,17 +1,26 @@
 from Controller.DeviceController import DeviceController
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Blueprint
+import os
 
-from __main__ import app
+#from __main__ import app
+
+DEVICE_API = Blueprint('device_api', __name__)
+
+def get_blueprint():
+    """Return the blueprint for the main DEVICE_API module"""
+    return DEVICE_API
 
 devices = DeviceController()
 
+api_version = '/' + os.getenv('API_VERSION') or 'v1'
+
 # Every devices
-@app.route('/devices', methods=['GET'])
+@DEVICE_API.route(api_version + '/devices', methods=['GET'])
 def getDevices():
     return DeviceController.getDevices()
 
 # Single Device
-@app.route('/devices/<string:device_id>', methods=['GET'])
+@DEVICE_API.route(api_version + '/devices/<string:device_id>', methods=['GET'])
 def getDevice(device_id):
     deviceFound = devices.getDevice(device_id)
     if (deviceFound != False):
@@ -19,7 +28,7 @@ def getDevice(device_id):
     return jsonify({'message': 'Device Not found'}), 400
 
 # Create device
-@app.route('/devices', methods=['POST'])
+@DEVICE_API.route(api_version + '/devices', methods=['POST'])
 def addDevice():
     id = devices.addDevice(request.json)
     if (id > 0):
@@ -27,7 +36,7 @@ def addDevice():
     return jsonify({'message': 'Device can not be added'})
     
 #Update device
-@app.route('/devices/<string:device_id>', methods=['PUT'])
+@DEVICE_API.route(api_version + '/devices/<string:device_id>', methods=['PUT'])
 def editDevice(device_id):
     new_updated_at = devices.updateDevice(device_id, request.json)
     if (new_updated_at != False):
@@ -35,7 +44,7 @@ def editDevice(device_id):
     return jsonify({'message': 'Device can not be updated'})
 
 #Delete device
-@app.route('/devices/<string:device_id>', methods=['DELETE'])
+@DEVICE_API.route(api_version + '/devices/<string:device_id>', methods=['DELETE'])
 def deleteDevice(device_id):
     new_deleted_at = devices.deleteDevice(device_id)
     if (new_deleted_at != False):

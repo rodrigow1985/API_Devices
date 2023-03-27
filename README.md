@@ -45,7 +45,28 @@ Los servicios son los siguientes:
 - API
 6. Generar la base de datos mediante ejecutando todas las sentencias establecidas en el archivo "database/schema.sql"
 7. Para realizar las pruebas pre configuradas en el desarrollo, revisar el archivo README.md del directorio "test"
-8. Para probar la consulta de una entidad:
+#Rutas de ejemplo
+1. Swagger
 ```
-http://host:port/devices
+http://host:port/version/swagger
+```
+2. Agregar un nuevo device [method=POST]
+```
+http://host:port/version/devices
+```
+3. Obtener todos los devices [method=GET]
+```
+http://host:port/version/devices
+```
+4. Obtener un device específico [method=GET]
+```
+http://host:port/version/devices/{id}
+```
+5. Actualizar un device específico [method=PUT]
+```
+http://host:port/version/devices/{id}
+```
+6. Borrar un device específico [method=DELETE]
+```
+http://host:port/version/devices/{id}
 ```
