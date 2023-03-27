@@ -28,8 +28,8 @@ class TestDeviceAPI(unittest.TestCase):
 
     def allTest(self):
         self.test_1_addDevice()
-        self.test_2_getDevice()
         self.test_3_getDevices()
+        self.test_2_getDevice()
         self.test_4_updateDevice()
         self.test_5_deleteDevice()
 
@@ -43,6 +43,7 @@ class TestDeviceAPI(unittest.TestCase):
 
     @time_measurement
     def test_2_getDevice(self):
+        print(self.id_prueba)
         resp = requests.get(self.URL + "/" + str(self.id_prueba))
         self.assertEqual(resp.status_code, 200)
         self.assertGreater(len(resp.json()), 1)

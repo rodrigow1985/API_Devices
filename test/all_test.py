@@ -4,7 +4,6 @@ def allTest():
     testerDeviceAPI = TestDeviceAPI()
     printHeaderTest(testerDeviceAPI.__class__.__name__)
     testerDeviceAPI.allTest()
-
     
 
 def printHeaderTest(class_name):
