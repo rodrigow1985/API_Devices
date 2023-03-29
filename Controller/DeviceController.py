@@ -1,9 +1,7 @@
-from flask import current_app, jsonify
+from flask import current_app
 from Model.Device import Device
-from data.Devices import devices
-from config.db.Database import Database
+from database.Database import Database
 from utils.Dict import CreateDict
-from utils.Date import Date
 import json
 
 class DeviceController:
